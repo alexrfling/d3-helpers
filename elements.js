@@ -3,7 +3,7 @@
 //==============================================================================
 
 class GraphicalElement {
-  constructor(id) {
+  constructor(svg, id) {
     this.id = id;
     this.group = svg.append("g").attr("id", this.id);
     this.anchor = null;
@@ -23,13 +23,15 @@ class GraphicalElement {
 //==============================================================================
 
 class Cells extends GraphicalElement {
-  constructor(id, data, key, x, y, width, height, fill) {
-    super(id);
-    this.x = x;
-    this.y = y;
-    this.width = width;
-    this.height = height;
-    this.fill = fill;
+  constructor(svg, id, data, key, x, y, width, height, fill) {
+    super(svg, id);
+    this.attrs = {
+      x: x,
+      y: y,
+      width: width,
+      height: height,
+      fill: fill
+    };
     updateData(data, key);
   }
 
@@ -39,12 +41,12 @@ class Cells extends GraphicalElement {
                       .data(data, key)
                       .enter()
                       .append("rect");
-    this.updateAttrs(["x", "y", "width", "height", "fill"]);
+    this.updateVis(["x", "y", "width", "height", "fill"]);
   }
 
-  updateAttrs(attrs) {
+  updateVis(attrs) {
     for (var j = 0; j < attrs.length; j++) {
-      this.selection.attr(attrs[j], this[attrs[j]]);
+      this.selection.attr(attrs[j], this.attrs[attrs[j]]);
     }
   }
 
@@ -58,8 +60,8 @@ class Cells extends GraphicalElement {
 //==============================================================================
 
 class Labels extends GraphicalElement {
-  constructor(id, names, margin, offset, angled, fontSize, orientation) {
-    super(id);
+  constructor(svg, id, names, margin, offset, angled, fontSize, orientation) {
+    super(svg, id);
     this.names = names;
     this.margin = margin;
     this.offset = offset;
@@ -117,8 +119,8 @@ class Labels extends GraphicalElement {
 //==============================================================================
 
 class Title extends GraphicalElement {
-  constructor(id, text, fontSize) {
-    super(id);
+  constructor(svg, id, text, fontSize) {
+    super(svg, id);
     this.text = text;
     this.selection = this.group.append("text").attr("class", "title")
                       .style("font-size", fontSize).text(this.text);
@@ -129,3 +131,44 @@ class Title extends GraphicalElement {
     this.selection.text(this.text);
   }
 }
+
+//==============================================================================
+//                                    Title
+//==============================================================================
+
+class Tooltip {
+    constructor(container, title, labels, accessor) {
+      this.title = title;
+      this.labels = labels;
+      this.accessor = accessor;
+      this.group = container.append("div").attr("class", "tooltip").classed("hidden", true);
+      this.titleElement = this.group.append("p").text(title);
+      this.table = this.group.append("table");
+      this.setup(this.labels);
+    }
+
+    setup(labels) {
+      this.labels = labels;
+      this.table.selectAll("tr").remove();
+      var rows = this.table.selectAll("tr").data(this.labels).enter().append("tr");
+      rows.append("td").append("p").text(function(d) { return d.text; });
+      rows.append("td").append("p").attr("id", function(d) { return d.id; });
+    }
+
+    show(d, rect) {
+      var box = rect.getBoundingClientRect(),
+          anchor = [box.left + box.width + window.pageXOffset,
+                    box.top + box.height + window.pageYOffset];
+      this.group.style("left", anchor[0] + "px")
+                .style("top", anchor[1] + "px")
+                .classed("hidden", false);
+      var keys = Object.keys(this.accessor(d));
+      for (var j = 0; j < keys.length; j++) {
+        this.group.select("#" + keys[j]).text(this.accessor(d)[keys[j]]);
+      }
+    }
+
+    hide() {
+      this.group.classed("hidden", true);
+    }
+  }
