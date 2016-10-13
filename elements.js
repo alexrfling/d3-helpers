@@ -111,3 +111,21 @@ class Labels extends GraphicalElement {
     }
   }
 }
+
+//==============================================================================
+//                                    Title
+//==============================================================================
+
+class Title extends GraphicalElement {
+  constructor(id, text, fontSize) {
+    super(id);
+    this.text = text;
+    this.selection = this.group.append("text").attr("class", "title")
+                      .style("font-size", fontSize).text(this.text);
+  }
+
+  setText(text) {
+    this.text = text;
+    this.selection.text(this.text);
+  }
+}
