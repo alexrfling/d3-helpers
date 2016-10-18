@@ -1,4 +1,36 @@
 //==============================================================================
+//                                SVGContainer
+//==============================================================================
+
+class SVGContainer {
+  constructor(parentId, divClass, svgClass, resizeCallback, margin, height) {
+    this.parentId = parentId;
+    this.divClass = divClass;
+    this.svgClass = svgClass;
+    this.resizeCallback = resizeCallback;
+    this.margin = margin;
+    this.parent = document.getElementById(this.parentId);
+    this.divWidth = this.parent.clientWidth;
+    this.divHeight = height;
+    this.svgWidth = this.divWidth - this.margin.left - this.margin.right;
+    this.svgHeight = this.divHeight - this.margin.top - this.margin.bottom;
+    this.div = d3.select("#" + id).append("div").attr("class", divClass);
+    this.SVG = this.div.append("svg").attr("class", svgClass);
+    this.svg = this.SVG.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+    window.addEventListener("resize", this.resizeCallback);
+  }
+
+  resize() {
+    this.divWidth = this.parent.clientWidth;
+    this.svgWidth = this.divWidth - this.margin.left - this.margin.right;
+    this.SVG.attr("width", this.divWidth)
+  		      .attr("height", this.divHeight);
+    return this.svgWidth;
+  }
+}
+
+
+//==============================================================================
 //                                  Tooltip
 //==============================================================================
 
