@@ -14,7 +14,7 @@ class SVGContainer {
     this.divHeight = height;
     this.svgWidth = this.divWidth - this.margin.left - this.margin.right;
     this.svgHeight = this.divHeight - this.margin.top - this.margin.bottom;
-    this.div = d3.select("#" + id).append("div").attr("class", divClass);
+    this.div = d3.select("#" + this.parentId).append("div").attr("class", divClass);
     this.SVG = this.div.append("svg").attr("class", svgClass);
     this.svg = this.SVG.append("g").attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
     window.addEventListener("resize", this.resizeCallback);
