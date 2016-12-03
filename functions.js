@@ -17,3 +17,10 @@ function interpolateColors(low, mid, high, length) {
                     .map(function(j) { return midToHighF(j / Math.ceil(length / 2)); });
   return lowToMid.concat(midToHigh);
 }
+
+function flushContents(id) {
+  var node = document.getElementById(id);
+  while (node.firstChild) {
+    node.removeChild(node.firstChild);
+  }
+}
