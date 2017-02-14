@@ -49,8 +49,8 @@ class Tooltip {
         this.labels = labels;
         this.table.selectAll('tr').remove();
         var rows = this.table.selectAll('tr').data(this.labels).enter().append('tr');
-        rows.append('td').append('p').text(function(d) { return d.text; });
-        rows.append('td').append('p').attr('id', function(d) { return d.id; });
+        rows.append('td').append('p').text(function (d) { return d.text; });
+        rows.append('td').append('p').attr('id', function (d) { return d.id; });
     }
 
     show (d, rect) {

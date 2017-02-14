@@ -1,7 +1,7 @@
 class Bucketizer {
 
     constructor (dividers, colors) {
-        this.domain = dividers.map(function(d) { return d; }); // copy
+        this.domain = dividers.map(function (d) { return d; }); // copy
         this.domain.push(Number.POSITIVE_INFINITY);
         this.range = colors;
     }

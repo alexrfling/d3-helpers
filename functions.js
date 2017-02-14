@@ -3,11 +3,11 @@ function sample (array, max) {
         return array;
     } else {
         var sampler = d3.scaleLinear().domain([0, max - 1]).range([0, array.length - 1]);
-        var sampledIndices = d3.range(max).map(function(i) {
+        var sampledIndices = d3.range(max).map(function (i) {
             return Math.floor(sampler(i));
         });
 
-        return sampledIndices.map(function(i) {
+        return sampledIndices.map(function (i) {
             return array[i];
         });
     }
@@ -15,11 +15,11 @@ function sample (array, max) {
 
 function interpolateColors (low, mid, high, length) {
     var lowToMidF = d3.interpolateLab(low, mid);
-    var lowToMid = d3.range(Math.floor(length / 2)).map(function(j) {
+    var lowToMid = d3.range(Math.floor(length / 2)).map(function (j) {
         return lowToMidF(j / Math.floor(length / 2));
     });
     var midToHighF = d3.interpolateLab(mid, high);
-    var midToHigh = d3.range(Math.ceil(length / 2)).map(function(j) {
+    var midToHigh = d3.range(Math.ceil(length / 2)).map(function (j) {
         return midToHighF(j / Math.ceil(length / 2));
     });
 
