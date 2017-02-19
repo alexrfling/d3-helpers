@@ -3,29 +3,41 @@
 //==============================================================================
 
 class SVGContainer {
+
     constructor (parentId, divClass, svgClass, resizeCallback, margin, height) {
-        this.parentId = parentId;
-        this.divClass = divClass;
-        this.svgClass = svgClass;
-        this.resizeCallback = resizeCallback;
-        this.margin = margin;
-        this.parent = document.getElementById(this.parentId);
-        this.divWidth = this.parent.clientWidth;
-        this.divHeight = height;
-        this.svgWidth = this.divWidth - this.margin.left - this.margin.right;
-        this.svgHeight = this.divHeight - this.margin.top - this.margin.bottom;
-        this.div = d3.select('#' + this.parentId).append('div').attr('class', divClass);
-        this.SVG = this.div.append('svg').attr('class', svgClass);
-        this.svg = this.SVG.append('g').attr('transform', 'translate(' + this.margin.left + ',' + this.margin.top + ')');
-        window.addEventListener('resize', this.resizeCallback);
+        var me = this;
+
+        me.parentId = parentId;
+        me.divClass = divClass;
+        me.svgClass = svgClass;
+        me.resizeCallback = resizeCallback;
+        me.margin = margin;
+        me.parent = document.getElementById(me.parentId);
+        me.divWidth = me.parent.clientWidth;
+        me.divHeight = height;
+        me.svgWidth = me.divWidth - me.margin.left - me.margin.right;
+        me.svgHeight = me.divHeight - me.margin.top - me.margin.bottom;
+        me.div = d3.select('#' + me.parentId)
+            .append('div')
+            .attr('class', divClass);
+        me.SVG = me.div
+            .append('svg')
+            .attr('class', svgClass);
+        me.svg = me.SVG
+            .append('g')
+            .attr('transform', 'translate(' + me.margin.left + ',' + me.margin.top + ')');
+        window.addEventListener('resize', me.resizeCallback);
     }
 
     resize () {
-        this.divWidth = this.parent.clientWidth;
-        this.svgWidth = this.divWidth - this.margin.left - this.margin.right;
-        this.SVG.attr('width', this.divWidth)
-                .attr('height', this.divHeight);
-        return this.svgWidth;
+        var me = this;
+
+        me.divWidth = me.parent.clientWidth;
+        me.svgWidth = me.divWidth - me.margin.left - me.margin.right;
+        me.SVG
+            .attr('width', me.divWidth)
+            .attr('height', me.divHeight);
+        return me.svgWidth;
     }
 }
 
@@ -35,38 +47,67 @@ class SVGContainer {
 //==============================================================================
 
 class Tooltip {
+
     constructor (container, title, labels, accessor) {
-        this.title = title;
-        this.labels = labels;
-        this.accessor = accessor;
-        this.group = container.append('div').attr('class', 'tooltip').classed('hidden', true);
-        this.titleElement = this.group.append('p').text(title);
-        this.table = this.group.append('table');
-        this.setup(this.labels);
+        var me = this;
+        me.container = container;
+        me.title = title;
+        me.labels = labels;
+        me.accessor = accessor;
+
+        me.group = me.container
+            .append('div')
+            .attr('class', 'tooltip')
+            .classed('hidden', true);
+        me.titleElement = me.group
+            .append('p')
+            .text(title);
+        me.table = me.group
+            .append('table');
+
+        me.setup(me.labels);
     }
 
     setup (labels) {
-        this.labels = labels;
-        this.table.selectAll('tr').remove();
-        var rows = this.table.selectAll('tr').data(this.labels).enter().append('tr');
-        rows.append('td').append('p').text(function (d) { return d.text; });
-        rows.append('td').append('p').attr('id', function (d) { return d.id; });
+        var me = this;
+        me.labels = labels;
+
+        me.table
+            .selectAll('tr')
+            .remove();
+        var rows = me.table
+            .selectAll('tr')
+            .data(me.labels)
+            .enter()
+            .append('tr');
+        rows.append('td')
+            .append('p')
+            .text(function (d) { return d.text; });
+        rows.append('td')
+            .append('p')
+            .attr('id', function (d) { return d.id; });
     }
 
     show (d, rect) {
+        var me = this;
         var box = rect.getBoundingClientRect();
         var anchor = [box.left + box.width + window.pageXOffset,
                       box.top + box.height + window.pageYOffset];
-        this.group.style('left', anchor[0] + 'px')
-                  .style('top', anchor[1] + 'px')
-                  .classed('hidden', false);
-        var keys = Object.keys(this.accessor(d));
+
+        me.group
+            .style('left', anchor[0] + 'px')
+            .style('top', anchor[1] + 'px')
+            .classed('hidden', false);
+
+        var keys = Object.keys(me.accessor(d));
         for (var j = 0; j < keys.length; j++) {
-            this.group.select('#' + keys[j]).text(this.accessor(d)[keys[j]]);
+            me.group.select('#' + keys[j]).text(me.accessor(d)[keys[j]]);
         }
     }
 
     hide () {
-        this.group.classed('hidden', true);
+        var me = this;
+
+        me.group.classed('hidden', true);
     }
 }

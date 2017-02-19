@@ -1,18 +1,21 @@
 class Bucketizer {
 
     constructor (dividers, colors) {
-        this.domain = dividers.map(function (d) { return d; }); // copy
-        this.domain.push(Number.POSITIVE_INFINITY);
-        this.range = colors;
+        var me = this;
+        me.domain = dividers.slice(); // copy
+        me.domain.push(Number.POSITIVE_INFINITY);
+        me.range = colors;
     }
 
     bucketize (value) {
-        for (var j = 0; j < this.domain.length - 1; j++) {
-            if (value < this.domain[j] && value < this.domain[j + 1]) {
-                return this.range[j];
+        var me = this;
+
+        for (var j = 0; j < me.domain.length - 1; j++) {
+            if (value < me.domain[j] && value < me.domain[j + 1]) {
+                return me.range[j];
             }
         }
 
-        return this.range[this.range.length - 1];
+        return me.range[me.range.length - 1];
     }
 }
