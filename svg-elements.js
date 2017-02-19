@@ -31,8 +31,9 @@ class GraphicalElement {
 class Cells extends GraphicalElement {
 
     constructor (svg, id, data, key, x, y, width, height, fill) {
-        var me = this;
         super(svg, id);
+
+        var me = this;
         me.attrs = {
             x: x,
             y: y,
@@ -79,8 +80,9 @@ class Cells extends GraphicalElement {
 class Labels extends GraphicalElement {
 
     constructor (svg, id, className, names, margin, offset, angled, fontSize, orientation) {
-        var me = this;
         super(svg, id);
+
+        var me = this;
         me.names = names;
         me.margin = margin;
         me.offset = offset;
@@ -170,8 +172,9 @@ class Labels extends GraphicalElement {
 class Title extends GraphicalElement {
 
     constructor (svg, id, text, fontSize) {
-        var me = this;
         super(svg, id);
+
+        var me = this;
         me.text = text;
 
         me.selection = me.group
