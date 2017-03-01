@@ -10,7 +10,7 @@ function identity (d) {
 
 // returns a string that should be usable as an HTML id (work in progress)
 function htmlEscape (str) {
-    return str.replace(/\||\.|\(|\)/g, '_');
+    return str.replace(/\||\.|\(|\)|'|"| /g, '_');
 }
 
 // returns the given string with all period characters replaced with underscores
