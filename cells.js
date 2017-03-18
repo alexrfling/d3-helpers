@@ -1,6 +1,6 @@
 class Cells extends GraphicalElement {
 
-    constructor (svg, id, data, key, x, y, width, height, fill) {
+    constructor (svg, id, data, key, x, y, width, height, fill, options) {
         super(svg, id);
 
         var me = this;
@@ -11,6 +11,7 @@ class Cells extends GraphicalElement {
             height: height,
             fill: fill
         };
+        me.options = (options || {});
 
         me.updateData(data, key);
     }
