@@ -1,6 +1,6 @@
 class Title extends GraphicalElement {
 
-    constructor (svg, id, text, fontSize) {
+    constructor (svg, id, className, text, fontSize) {
         super(svg, id);
 
         var me = this;
@@ -8,7 +8,7 @@ class Title extends GraphicalElement {
 
         me.selection = me.group
             .append('text')
-            .attr('class', 'title')
+            .attr('class', className)
             .style('font-size', fontSize)
             .text(me.text);
     }
