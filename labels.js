@@ -32,7 +32,7 @@ class Labels extends GraphicalElement {
                 break;
         }
 
-        me.updateVisNT(); // for initial angling
+        me.updateVis(); // for initial angling
     }
 
     updateNames (names) {
@@ -49,39 +49,37 @@ class Labels extends GraphicalElement {
 
         me.updateNames(me.names);
 
-        if (me.angled) {
-            me.group
-                .transition()
-                .duration(animDuration)
-                .call(me.axis)
-                .selectAll('text')                // to angle the other way:
-                .style('text-anchor', 'start')    // end
-                .attr('dx', '.8em')               // -.8em
-                .attr('dy', '.15em')              // .15em
-                .attr('transform', 'rotate(45)'); // rotate(-45)
+        if (animDuration) {
+
+            if (me.angled) {
+                me.group
+                    .transition()
+                    .duration(animDuration)
+                    .call(me.axis)
+                    .selectAll('text')                // to angle the other way:
+                    .style('text-anchor', 'start')    // end
+                    .attr('dx', '.8em')               // -.8em
+                    .attr('dy', '.15em')              // .15em
+                    .attr('transform', 'rotate(45)'); // rotate(-45)
+            } else {
+                me.group
+                    .transition()
+                    .duration(animDuration)
+                    .call(me.axis);
+            }
         } else {
-            me.group
-                .transition()
-                .duration(animDuration)
-                .call(me.axis);
-        }
-    }
 
-    updateVisNT () {
-        var me = this;
-
-        me.updateNames(me.names);
-
-        if (me.angled) {
-            me.group
-                .call(me.axis)
-                .selectAll('text')                // to angle the other way:
-                .style('text-anchor', 'start')    // end
-                .attr('dx', '.8em')               // -.8em
-                .attr('dy', '.15em')              // .15em
-                .attr('transform', 'rotate(45)'); // rotate(-45)
-        } else {
-            me.group.call(me.axis);
+            if (me.angled) {
+                me.group
+                    .call(me.axis)
+                    .selectAll('text')                // to angle the other way:
+                    .style('text-anchor', 'start')    // end
+                    .attr('dx', '.8em')               // -.8em
+                    .attr('dy', '.15em')              // .15em
+                    .attr('transform', 'rotate(45)'); // rotate(-45)
+            } else {
+                me.group.call(me.axis);
+            }
         }
     }
 }
