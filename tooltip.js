@@ -32,10 +32,12 @@ class Tooltip {
             .data(me.labels)
             .enter()
             .append('tr');
-        rows.append('td')
+        rows
+            .append('td')
             .append('p')
             .text(function (d) { return d.text; });
-        rows.append('td')
+        rows
+            .append('td')
             .append('p')
             .attr('id', function (d) { return d.id; });
     }
@@ -53,13 +55,16 @@ class Tooltip {
 
         var keys = Object.keys(me.accessor(d));
         for (var j = 0; j < keys.length; j++) {
-            me.group.select('#' + keys[j]).text(me.accessor(d)[keys[j]]);
+            me.group
+                .select('#' + keys[j])
+                .text(me.accessor(d)[keys[j]]);
         }
     }
 
     hide () {
         var me = this;
 
-        me.group.classed('hidden', true);
+        me.group
+            .classed('hidden', true);
     }
 }

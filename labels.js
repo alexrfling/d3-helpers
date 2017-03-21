@@ -1,7 +1,7 @@
 class Labels extends GraphicalElement {
 
-    constructor (svg, id, className, names, margin, offset, angled, fontSize, orientation) {
-        super(svg, id);
+    constructor (svg, className, names, margin, offset, angled, fontSize, orientation, options) {
+        super(svg, className, options);
 
         var me = this;
         me.names = names;
@@ -14,7 +14,6 @@ class Labels extends GraphicalElement {
 
         me.updateNames(me.names);
         me.group
-            .attr('class', className)
             .style('font-size', me.fontSize);
 
         switch (orientation) {
@@ -78,7 +77,8 @@ class Labels extends GraphicalElement {
                     .attr('dy', '.15em')              // .15em
                     .attr('transform', 'rotate(45)'); // rotate(-45)
             } else {
-                me.group.call(me.axis);
+                me.group
+                    .call(me.axis);
             }
         }
     }
