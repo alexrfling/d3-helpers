@@ -1,7 +1,7 @@
 class Cells extends GraphicalElement {
 
-    constructor (svg, id, data, key, x, y, width, height, fill, options) {
-        super(svg, id);
+    constructor (svg, className, data, key, x, y, width, height, fill, options) {
+        super(svg, className, options);
 
         var me = this;
         me.attrs = {
@@ -11,7 +11,6 @@ class Cells extends GraphicalElement {
             height: height,
             fill: fill
         };
-        me.options = (options || {});
 
         me.updateData(data, key);
     }
@@ -33,13 +32,15 @@ class Cells extends GraphicalElement {
         var me = this;
 
         for (var j = 0; j < attrs.length; j++) {
-            me.selection.attr(attrs[j], me.attrs[attrs[j]]);
+            me.selection
+                .attr(attrs[j], me.attrs[attrs[j]]);
         }
     }
 
     addListener (event, callback) {
         var me = this;
 
-        me.selection.on(event, callback);
+        me.selection
+            .on(event, callback);
     }
 }

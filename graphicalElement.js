@@ -1,21 +1,24 @@
 class GraphicalElement {
 
-    constructor (svg, id) {
+    constructor (svg, className, options) {
         var me = this;
-        me.id = id;
-        me.group = svg.append('g').attr('id', me.id);
+        me.group = svg
+            .append('g')
+            .attr('class', className);
         me.anchor = null;
+        me.options = (options || {});
     }
 
     position () {
         var me = this;
 
-        me.group.attr('transform', 'translate(' + me.anchor[0] + ',' + me.anchor[1] + ')');
+        me.group
+            .attr('transform', 'translate(' + me.anchor[0] + ',' + me.anchor[1] + ')');
     }
 
     getBox () {
         var me = this;
 
-        return document.getElementById(me.id).getBoundingClientRect();
+        return me.group._groups[0][0].getBoundingClientRect();
     }
 }

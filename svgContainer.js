@@ -4,8 +4,6 @@ class SVGContainer {
         var me = this;
         me.parentId = parentId;
         me.parent = document.getElementById(me.parentId);
-        me.divClass = divClass;
-        me.svgClass = svgClass;
         me.onWindowResize = onWindowResize;
         me.margin = margin;
         me.divWidth = me.parent.clientWidth;
@@ -15,15 +13,16 @@ class SVGContainer {
 
         me.div = d3.select('#' + me.parentId)
             .append('div')
-            .attr('class', me.divClass);
+            .attr('class', divClass);
         me.SVG = me.div
             .append('svg')
-            .attr('class', me.svgClass);
+            .attr('class', svgClass);
         me.svg = me.SVG
             .append('g')
             .attr('transform', 'translate(' + me.margin.left + ',' + me.margin.top + ')');
 
-        window.addEventListener('resize', me.onWindowResize);
+        window
+            .addEventListener('resize', me.onWindowResize);
 
         // initialize
         me.resize();
