@@ -40,6 +40,20 @@
     display: none;
 }
 
+.selection {
+    fill-opacity: 0.2;
+	fill: lightgrey;
+	stroke: grey;
+}
+
+.selection:hover {
+    fill-opacity: 0.5;
+}
+
 .bold {
     font-weight: bold;
+}
+
+.hidden {
+    display: none;
 }
