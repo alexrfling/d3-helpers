@@ -1,0 +1,45 @@
+.d3-helpers-widget-div {
+    margin: 0px;
+    border: 0px;
+    padding: 0px;
+    font-family: sans-serif;
+}
+
+.d3-helpers-widget-svg {
+    shape-rendering: crispEdges;
+}
+
+.d3-tip {
+    font-family: sans-serif;
+    font-size: 12px;
+}
+
+.d3-tip td {
+    color: lightgrey;
+}
+
+.d3-tip tr:not(:last-child) td {
+    padding-bottom: 5px;
+}
+
+.d3-tip td:nth-child(1) {
+    text-align: right;
+}
+
+.d3-tip td:nth-child(2) {
+    padding-left: 5px;
+    font-weight: normal;
+}
+
+.axis .tick line, .y-domain {
+    stroke: lightgrey;
+    stroke-width: 2px;
+}
+
+.axis .domain {
+    display: none;
+}
+
+.bold {
+    font-weight: bold;
+}
