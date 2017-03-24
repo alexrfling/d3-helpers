@@ -19,4 +19,9 @@ class Widget {
     htmlEscape (str) {
         return ('_' + str).replace(/\||\.|\(|\)|'|"| /g, '_');
     }
+
+    // returns 'number' rounded to 'decimals' decimal places
+    round (number, decimals) {
+        return Number(Math.round(number + 'e' + decimals) + 'e-' + decimals);
+    }
 }
