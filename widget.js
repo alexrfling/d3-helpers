@@ -20,6 +20,11 @@ class Widget {
         return ('_' + str).replace(/\||\.|\(|\)|'|"| /g, '_');
     }
 
+    // returns the given object
+    identity (d) {
+        return d;
+    }
+
     interpolateColors (low, mid, high, length) {
         var lowToMidF = d3.interpolateLab(low, mid);
         var lowToMid = d3.range(Math.floor(length / 2)).map(function (j) {
