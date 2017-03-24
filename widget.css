@@ -31,7 +31,7 @@
     font-weight: normal;
 }
 
-.axis .tick line, .y-domain {
+.axis .tick line, .axis-tick-line {
     stroke: lightgrey;
     stroke-width: 2px;
 }
@@ -42,8 +42,8 @@
 
 .selection {
     fill-opacity: 0.2;
-	fill: lightgrey;
-	stroke: grey;
+    fill: lightgrey;
+    stroke: grey;
 }
 
 .selection:hover {
