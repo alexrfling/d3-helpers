@@ -39,7 +39,7 @@ class Labels extends GraphicalElement {
         me.names = names;
 
         me.scale
-            .domain(sample(me.names, Math.floor(me.factor * me.margin() / me.fontSize)))
+            .domain(me.sample(me.names, Math.floor(me.factor * me.margin() / me.fontSize)))
             .range([me.offset() / 2, me.margin() - me.offset() / 2]);
     }
 
@@ -80,6 +80,23 @@ class Labels extends GraphicalElement {
                 me.group
                     .call(me.axis);
             }
+        }
+    }
+
+    sample (array, max) {
+        if (array.length <= max) {
+            return array;
+        } else {
+            var sampler = d3.scaleLinear()
+                .domain([0, max - 1])
+                .range([0, array.length - 1]);
+            var sampledIndices = d3.range(max).map(function (j) {
+                return Math.floor(sampler(j));
+            });
+
+            return sampledIndices.map(function (j) {
+                return array[j];
+            });
         }
     }
 }
