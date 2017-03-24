@@ -20,6 +20,11 @@ class Widget {
         return ('_' + str).replace(/\||\.|\(|\)|'|"| /g, '_');
     }
 
+    // returns the key field of the given object
+    key (d) {
+        return d.key;
+    }
+
     // returns 'number' rounded to 'decimals' decimal places
     round (number, decimals) {
         return Number(Math.round(number + 'e' + decimals) + 'e-' + decimals);
