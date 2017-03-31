@@ -1,42 +1,89 @@
 class Labels extends GraphicalElement {
 
-    constructor (svg, className, names, margin, offset, angled, fontSize, orientation, options) {
+    constructor (svg, className, names, margin, offset, angled, fontSize, maxLabelLength, orientation, options) {
         super(svg, className, options);
 
         var me = this;
-        me.names = names;
         me.margin = margin;
         me.offset = offset;
         me.angled = angled;
         me.fontSize = fontSize;
+        me.maxLabelLength = maxLabelLength;
         me.factor = (me.angled ? 0.75 : 1); // squish factor
         me.scale = d3.scalePoint();
 
-        me.updateNames(me.names);
         me.group
             .style('font-size', me.fontSize);
 
         switch (orientation) {
             case 'top':
-                me.axis = d3.axisTop(me.scale);
+                me.axis = d3.axisTop(me.scale)
+                    .tickFormat(me.tickFormat);
                 break;
             case 'left':
-                me.axis = d3.axisLeft(me.scale);
+                me.axis = d3.axisLeft(me.scale)
+                    .tickFormat(me.tickFormat);
                 break;
             case 'right':
-                me.axis = d3.axisRight(me.scale);
+                me.axis = d3.axisRight(me.scale)
+                    .tickFormat(me.tickFormat);
                 break;
             case 'bottom':
-                me.axis = d3.axisBottom(me.scale);
+                me.axis = d3.axisBottom(me.scale)
+                    .tickFormat(me.tickFormat);
                 break;
         }
 
+        me.updateNames(names);
         me.updateVis(); // for initial angling
+    }
+
+    tickFormat (d) {
+        var keyLength = parseInt(d);
+
+        return d.slice(d.indexOf('_') + 1).slice(keyLength);
+    }
+
+    getLabelId (d) {
+        var me = this;
+        var keyLength = parseInt(d);
+
+        return me.htmlEscape(d.slice(d.indexOf('_') + 1).slice(0, keyLength));
+    }
+
+    getEllipsedNames (names) {
+        var me = this;
+
+        // HACK yay SVG text ellipsing...
+        var text = me.group
+            .append('text')
+            .style('visibility', 'hidden');
+
+        var ellipsedNames = names.map(function (name) {
+            var ellipsedName = name;
+            var last = name.length;
+            text
+                .text(name);
+
+            while (text._groups[0][0].getBoundingClientRect().width > me.maxLabelLength) {
+                last = last - 1;
+                ellipsedName = name.slice(0, last) + '...';
+                text
+                    .text(ellipsedName);
+            }
+
+            return name.length + '_' + name + ellipsedName;
+        });
+
+        text
+            .remove();
+
+        return ellipsedNames;
     }
 
     updateNames (names) {
         var me = this;
-        me.names = names;
+        me.names = me.getEllipsedNames(names);
 
         me.scale
             .domain(me.sample(me.names, Math.floor(me.factor * me.margin() / me.fontSize)))
@@ -45,8 +92,6 @@ class Labels extends GraphicalElement {
 
     updateVis (animDuration) {
         var me = this;
-
-        me.updateNames(me.names);
 
         if (animDuration) {
 
@@ -81,6 +126,10 @@ class Labels extends GraphicalElement {
                     .call(me.axis);
             }
         }
+
+        me.group
+            .selectAll('text')
+            .attr('id', function (d) { return me.getLabelId.call(me, d); });
     }
 
     sample (array, max) {
