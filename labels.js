@@ -53,6 +53,7 @@ class Labels extends GraphicalElement {
 
     getEllipsedNames (names) {
         var me = this;
+        var maxLabelLength = me.maxLabelLength();
 
         // HACK yay SVG text ellipsing...
         var text = me.group
@@ -65,7 +66,7 @@ class Labels extends GraphicalElement {
             text
                 .text(name);
 
-            while (text._groups[0][0].getBoundingClientRect().width > me.maxLabelLength) {
+            while (text._groups[0][0].getBoundingClientRect().width > maxLabelLength) {
                 last = last - 1;
                 ellipsedName = name.slice(0, last) + '...';
                 text
@@ -83,7 +84,8 @@ class Labels extends GraphicalElement {
 
     updateNames (names) {
         var me = this;
-        me.names = me.getEllipsedNames(names);
+        me.origNames = (names ? names : me.origNames);
+        me.names = me.getEllipsedNames(me.origNames);
 
         me.scale
             .domain(me.sample(me.names, Math.floor(me.factor * me.margin() / me.fontSize)))
