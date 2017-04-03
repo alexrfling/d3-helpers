@@ -66,7 +66,7 @@ class Labels extends GraphicalElement {
             text
                 .text(name);
 
-            while (text._groups[0][0].getBoundingClientRect().width > maxLabelLength) {
+            while (last > 0 && text._groups[0][0].getBoundingClientRect().width > maxLabelLength) {
                 last = last - 1;
                 ellipsedName = name.slice(0, last) + '...';
                 text
