@@ -6,6 +6,7 @@ class Widget {
         me.options = (options || {});
     }
 
+    // removes all HTML nodes inside the element which has this widget's id
     destroy () {
         var me = this;
         var node = document.getElementById(me.id);
@@ -25,6 +26,8 @@ class Widget {
         return d;
     }
 
+    // returns an array of length 'length' whose elements are colors
+    // interpolated from the colors 'low' to 'mid' to 'high'
     interpolateColors (low, mid, high, length) {
         var midLow = Math.floor(length / 2);
         var midHigh = Math.ceil(length / 2);
@@ -45,7 +48,7 @@ class Widget {
         return d.key;
     }
 
-    // returns 'number' rounded to 'decimals' decimal places
+    // returns the number 'number' rounded to 'decimals' decimal places
     round (number, decimals) {
         return Number(Math.round(number + 'e' + decimals) + 'e-' + decimals);
     }
