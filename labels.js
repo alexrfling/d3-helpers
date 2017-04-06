@@ -90,12 +90,14 @@ class Labels extends GraphicalElement {
 
     updateLabels (labels) {
         var me = this;
+        var margin = me.margin();
+        var offset = me.offset() / 2;
         me.origLabels = (labels ? labels : me.origLabels);
         me.labels = me.getEllipsedLabels(me.origLabels);
 
         me.scale
-            .domain(me.sample(me.labels, Math.floor(me.factor * me.margin() / me.fontSize)))
-            .range([me.offset() / 2, me.margin() - me.offset() / 2]);
+            .domain(me.sample(me.labels, Math.floor(me.factor * margin / me.fontSize)))
+            .range([offset, margin - offset]);
     }
 
     updateVis (animDuration) {
