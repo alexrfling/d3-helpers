@@ -51,11 +51,12 @@ class Labels extends GraphicalElement {
         return me.htmlEscape(d.slice(d.indexOf('_') + 1).slice(0, keyLength));
     }
 
+    // HACK yay SVG text ellipsing...
     getEllipsedNames (names) {
         var me = this;
         var maxLabelLength = me.maxLabelLength();
 
-        // HACK yay SVG text ellipsing...
+        // invisible element to test label lengths
         var text = me.group
             .append('text')
             .style('visibility', 'hidden');
@@ -66,6 +67,8 @@ class Labels extends GraphicalElement {
             text
                 .text(name);
 
+            // if the whole label doesn't fit, chop off one character at a time
+            // until it does
             while (last > 0 && text._groups[0][0].getBoundingClientRect().width > maxLabelLength) {
                 last = last - 1;
                 ellipsedName = name.slice(0, last) + '...';
@@ -73,9 +76,12 @@ class Labels extends GraphicalElement {
                     .text(ellipsedName);
             }
 
+            // store both the ellipsed label (for display) and the original (for
+            // id) as well as the label length so they can be separated later
             return name.length + '_' + name + ellipsedName;
         });
 
+        // remove the invisible element
         text
             .remove();
 
