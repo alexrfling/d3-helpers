@@ -26,13 +26,15 @@ class Widget {
     }
 
     interpolateColors (low, mid, high, length) {
+        var midLow = Math.floor(length / 2);
+        var midHigh = Math.ceil(length / 2);
         var lowToMidF = d3.interpolateLab(low, mid);
-        var lowToMid = d3.range(Math.floor(length / 2)).map(function (j) {
-            return lowToMidF(j / Math.floor(length / 2));
+        var lowToMid = d3.range(midLow).map(function (j) {
+            return lowToMidF(j / midLow);
         });
         var midToHighF = d3.interpolateLab(mid, high);
-        var midToHigh = d3.range(Math.ceil(length / 2)).map(function (j) {
-            return midToHighF(j / Math.ceil(length / 2));
+        var midToHigh = d3.range(midHigh).map(function (j) {
+            return midToHighF(j / midHigh);
         });
 
         return lowToMid.concat(midToHigh);
