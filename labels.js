@@ -41,6 +41,7 @@ class Labels extends GraphicalElement {
     tickFormat (d) {
         var keyLength = parseInt(d);
 
+        // extract ellipsed label from string
         return d.slice(d.indexOf('_') + 1).slice(keyLength);
     }
 
@@ -48,6 +49,7 @@ class Labels extends GraphicalElement {
         var me = this;
         var keyLength = parseInt(d);
 
+        // extract original label from string, and escape it
         return me.htmlEscape(d.slice(d.indexOf('_') + 1).slice(0, keyLength));
     }
 
