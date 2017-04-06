@@ -1,6 +1,6 @@
 class Labels extends GraphicalElement {
 
-    constructor (svg, className, names, margin, offset, angled, fontSize, maxLabelLength, orientation, options) {
+    constructor (svg, className, labels, margin, offset, angled, fontSize, maxLabelLength, orientation, options) {
         super(svg, className, options);
 
         var me = this;
@@ -34,7 +34,7 @@ class Labels extends GraphicalElement {
                 break;
         }
 
-        me.updateNames(names);
+        me.updateLabels(labels);
         me.updateVis(); // for initial angling
     }
 
@@ -52,7 +52,7 @@ class Labels extends GraphicalElement {
     }
 
     // HACK yay SVG text ellipsing...
-    getEllipsedNames (names) {
+    getEllipsedLabels (labels) {
         var me = this;
         var maxLabelLength = me.maxLabelLength();
 
@@ -61,40 +61,40 @@ class Labels extends GraphicalElement {
             .append('text')
             .style('visibility', 'hidden');
 
-        var ellipsedNames = names.map(function (name) {
-            var ellipsedName = name;
-            var last = name.length;
+        var ellipsedLabels = labels.map(function (label) {
+            var ellipsedLabel = label;
+            var last = label.length;
             text
-                .text(name);
+                .text(label);
 
             // if the whole label doesn't fit, chop off one character at a time
             // until it does
             while (last > 0 && text._groups[0][0].getBoundingClientRect().width > maxLabelLength) {
                 last = last - 1;
-                ellipsedName = name.slice(0, last) + '...';
+                ellipsedLabel = label.slice(0, last) + '...';
                 text
-                    .text(ellipsedName);
+                    .text(ellipsedLabel);
             }
 
             // store both the ellipsed label (for display) and the original (for
             // id) as well as the label length so they can be separated later
-            return name.length + '_' + name + ellipsedName;
+            return label.length + '_' + label + ellipsedLabel;
         });
 
         // remove the invisible element
         text
             .remove();
 
-        return ellipsedNames;
+        return ellipsedLabels;
     }
 
-    updateNames (names) {
+    updateLabels (labels) {
         var me = this;
-        me.origNames = (names ? names : me.origNames);
-        me.names = me.getEllipsedNames(me.origNames);
+        me.origLabels = (labels ? labels : me.origLabels);
+        me.labels = me.getEllipsedLabels(me.origLabels);
 
         me.scale
-            .domain(me.sample(me.names, Math.floor(me.factor * me.margin() / me.fontSize)))
+            .domain(me.sample(me.labels, Math.floor(me.factor * me.margin() / me.fontSize)))
             .range([me.offset() / 2, me.margin() - me.offset() / 2]);
     }
 
