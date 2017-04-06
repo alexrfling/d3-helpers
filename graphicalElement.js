@@ -22,7 +22,7 @@ class GraphicalElement {
         return me.group._groups[0][0].getBoundingClientRect();
     }
 
-    // returns a String that should be usable as an HTML id (work in progress)
+    // returns a string that should be usable as an HTML id (work in progress)
     htmlEscape (str) {
         return ('_' + str).replace(/\||\.|\(|\)|'|"| /g, '_');
     }
