@@ -19,18 +19,22 @@ class Labels extends GraphicalElement {
             case 'top':
                 me.axis = d3.axisTop(me.scale)
                     .tickFormat(me.tickFormat);
+                me.lengthDimension = 'height';
                 break;
             case 'left':
                 me.axis = d3.axisLeft(me.scale)
                     .tickFormat(me.tickFormat);
+                me.lengthDimension = 'width';
                 break;
             case 'right':
                 me.axis = d3.axisRight(me.scale)
                     .tickFormat(me.tickFormat);
+                me.lengthDimension = 'width';
                 break;
             case 'bottom':
                 me.axis = d3.axisBottom(me.scale)
                     .tickFormat(me.tickFormat);
+                me.lengthDimension = 'height';
                 break;
         }
 
@@ -71,7 +75,7 @@ class Labels extends GraphicalElement {
 
             // if the whole label doesn't fit, chop off one character at a time
             // until it does
-            while (last > 0 && text._groups[0][0].getBoundingClientRect().width > maxLabelLength) {
+            while (last > 0 && text._groups[0][0].getBoundingClientRect()[me.lengthDimension] > maxLabelLength) {
                 last = last - 1;
                 ellipsedLabel = label.slice(0, last) + '...';
                 text
