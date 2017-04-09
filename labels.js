@@ -98,11 +98,12 @@ class Labels extends GraphicalElement {
         var me = this;
         var margin = me.margin();
         var offset = me.offset() / 2;
-        me.origLabels = me.sample(labels ? labels : me.origLabels, Math.floor(me.factor * margin / me.fontSize));
-        me.labels = me.getEllipsedLabels(me.origLabels);
+        me.allLabels = (labels ? labels : me.allLabels);
+        me.sampledLabels = me.sample(me.allLabels, Math.floor(me.factor * margin / me.fontSize));
+        me.ellipsedLabels = me.getEllipsedLabels(me.sampledLabels);
 
         me.scale
-            .domain(me.labels)
+            .domain(me.ellipsedLabels)
             .range([offset, margin - offset]);
     }
 
