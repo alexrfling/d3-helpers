@@ -67,6 +67,14 @@ class Labels extends GraphicalElement {
             .append('text')
             .style('visibility', 'hidden');
 
+        if (me.angled) {
+            text                                  // to angle the other way:
+                .style('text-anchor', 'start')    // end
+                .attr('dx', '.8em')               // -.8em
+                .attr('dy', '.15em')              // .15em
+                .attr('transform', 'rotate(45)'); // rotate(-45)
+        }
+
         var ellipsedLabels = labels.map(function (label) {
             var ellipsedLabel = label;
             var last = label.length;
