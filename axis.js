@@ -34,4 +34,11 @@ class Axis extends GraphicalElement {
             .duration(animDuration)
             .call(me.axis);
     }
+
+    updateTicks () {
+        var me = this;
+
+        me.group
+            .call(me.axis.tickSize(me.options.tickSize(), 0, 0));
+    }
 }
