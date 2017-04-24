@@ -31,12 +31,12 @@
     font-weight: normal;
 }
 
-.axis .tick line, .axis-tick-line {
+.labels .tick line, .labels-tick-line, .axis .tick line, .axis .domain {
     stroke: lightgrey;
     stroke-width: 2px;
 }
 
-.axis .domain {
+.labels .domain {
     display: none;
 }
 
