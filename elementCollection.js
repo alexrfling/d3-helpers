@@ -23,12 +23,14 @@ class ElementCollection extends GraphicalElement {
             .append(me.elementType);
     }
 
-    updateVis (attrs) {
+    updateVis () {
         var me = this;
 
-        for (var j = 0; j < attrs.length; j++) {
+        for (var j = 0; j < arguments.length; j++) {
+            var attribute = arguments[j];
+
             me.selection
-                .attr(attrs[j], me.attrs[attrs[j]]);
+                .attr(attribute, me.attrs[attribute]);
         }
     }
 
