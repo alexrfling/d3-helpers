@@ -1,16 +1,11 @@
-class Cells extends GraphicalElement {
+class ElementCollection extends GraphicalElement {
 
-    constructor (svg, className, data, key, x, y, width, height, fill, options) {
+    constructor (svg, className, elementType, attrs, data, key, options) {
         super(svg, className, options);
 
         var me = this;
-        me.attrs = {
-            x: x,
-            y: y,
-            width: width,
-            height: height,
-            fill: fill
-        };
+        me.elementType = elementType;
+        me.attrs = attrs;
 
         me.updateData(data, key);
     }
@@ -19,13 +14,13 @@ class Cells extends GraphicalElement {
         var me = this;
 
         me.group
-            .selectAll('rect')
+            .selectAll(me.elementType)
             .remove();
         me.selection = me.group
-            .selectAll('rect')
+            .selectAll(me.elementType)
             .data(data, key)
             .enter()
-            .append('rect');
+            .append(me.elementType);
     }
 
     updateVis (attrs) {
