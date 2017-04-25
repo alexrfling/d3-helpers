@@ -29,10 +29,15 @@ class Axis extends GraphicalElement {
     updateVis (animDuration) {
         var me = this;
 
-        me.group
-            .transition()
-            .duration(animDuration)
-            .call(me.axis);
+        if (animDuration) {
+            me.group
+                .transition()
+                .duration(animDuration)
+                .call(me.axis);
+        } else {
+            me.group
+                .call(me.axis);
+        }
     }
 
     updateTicks () {
