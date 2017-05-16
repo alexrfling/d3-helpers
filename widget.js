@@ -18,7 +18,7 @@ class Widget {
 
     // returns a string that should be usable as an HTML id (work in progress)
     htmlEscape (str) {
-        return ('_' + str).replace(/\||\.|\(|\)|'|"| /g, '_');
+        return ('_' + str).replace(/\||\.|\*|\/|\(|\)|'|"| /g, '_');
     }
 
     // returns the given object
