@@ -24,6 +24,10 @@ class Axis extends GraphicalElement {
                 me.axis = d3.axisBottom(me.scale);
                 break;
         }
+
+        if (me.options.tickFormat) {
+            me.axis.tickFormat(me.options.tickFormat);
+        }
     }
 
     updateVis (animDuration) {
