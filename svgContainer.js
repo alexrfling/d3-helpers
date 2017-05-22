@@ -23,7 +23,7 @@ class SVGContainer {
 
         if (me.options.onWindowResize) {
             window
-                .addEventListener('resize', me.onWindowResize);
+                .addEventListener('resize', me.options.onWindowResize);
         }
 
         // initialize
