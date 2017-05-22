@@ -32,7 +32,7 @@ class SVGContainer {
 
     resize (width, height) {
         var me = this;
-        me.divWidth = (me.options.onWindowResize ? me.parent.clientWidth : width);
+        me.divWidth = ((me.options.onWindowResize ? me.parent.clientWidth : width) || me.divWidth);
         me.divHeight = (height || me.divHeight);
         me.svgWidth = me.divWidth - me.margin.left - me.margin.right;
         me.svgHeight = me.divHeight - me.margin.top - me.margin.bottom;
