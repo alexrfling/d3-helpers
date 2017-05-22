@@ -1,12 +1,12 @@
 class SVGContainer {
 
-    constructor (parentId, divClass, svgClass, onWindowResize, margin, height) {
+    constructor (parentId, divClass, svgClass, margin, width, height, options) {
         var me = this;
+        me.options = (options || {});
         me.parentId = parentId;
         me.parent = document.getElementById(me.parentId);
-        me.onWindowResize = onWindowResize;
         me.margin = margin;
-        me.divWidth = me.parent.clientWidth;
+        me.divWidth = (width || me.parent.clientWidth);
         me.divHeight = height;
         me.svgWidth = me.divWidth - me.margin.left - me.margin.right;
         me.svgHeight = me.divHeight - me.margin.top - me.margin.bottom;
@@ -21,16 +21,18 @@ class SVGContainer {
             .append('g')
             .attr('transform', 'translate(' + me.margin.left + ',' + me.margin.top + ')');
 
-        window
-            .addEventListener('resize', me.onWindowResize);
+        if (me.options.onWindowResize) {
+            window
+                .addEventListener('resize', me.onWindowResize);
+        }
 
         // initialize
-        me.resize();
+        me.resize(me.divWidth, me.divHeight);
     }
 
-    resize (height) {
+    resize (width, height) {
         var me = this;
-        me.divWidth = me.parent.clientWidth;
+        me.divWidth = (width || me.parent.clientWidth);
         me.divHeight = (height || me.divHeight);
         me.svgWidth = me.divWidth - me.margin.left - me.margin.right;
         me.svgHeight = me.divHeight - me.margin.top - me.margin.bottom;
