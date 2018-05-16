@@ -148,14 +148,12 @@
 
     class ElementCollection extends GraphicalElement {
 
-        constructor (svg, className, elementType, attrs, data, key, options) {
+        constructor (svg, className, elementType, attrs, options) {
             super(svg, className, options);
 
             var me = this;
             me.elementType = elementType;
             me.attrs = attrs;
-
-            me.updateData(data, key);
         }
 
         updateData (data, key) {
@@ -169,6 +167,20 @@
                 .data(data, key)
                 .enter()
                 .append(me.elementType);
+        }
+
+        updateDataWithDomIds (data, key) {
+            var me = this;
+
+            me.group
+                .selectAll(me.elementType)
+                .remove();
+            me.selection = me.group
+                .selectAll(me.elementType)
+                .data(data, key)
+                .enter()
+                .append(me.elementType)
+                .attr('id', function (d) { return htmlEscape(key(d)); });
         }
 
         updateVis () {
