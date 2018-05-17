@@ -54,7 +54,7 @@ class ElementCollection extends GraphicalElement {
         var me = this;
 
         for (var j = 0; j < me.events.length; j++) {
-            var event = events[j];
+            var event = me.events[j];
 
             me.selection
                 .on(event, me.callbacks[event]);
