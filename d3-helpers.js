@@ -148,12 +148,14 @@
 
     class ElementCollection extends GraphicalElement {
 
-        constructor (svg, className, elementType, attrs, options) {
+        constructor (svg, className, elementType, attrs, callbacks, options) {
             super(svg, className, options);
 
             var me = this;
             me.elementType = elementType;
             me.attrs = attrs;
+            me.callbacks = callbacks;
+            me.events = Object.keys(callbacks);
         }
 
         updateData (data, key) {
@@ -167,6 +169,7 @@
                 .data(data, key)
                 .enter()
                 .append(me.elementType);
+            me.bindEventListeners();
         }
 
         updateDataWithDomIds (data, key) {
@@ -181,6 +184,7 @@
                 .enter()
                 .append(me.elementType)
                 .attr('id', function (d) { return htmlEscape(key(d)); });
+            me.bindEventListeners();
         }
 
         updateVis () {
@@ -194,11 +198,15 @@
             }
         }
 
-        addListener (event, callback) {
+        bindEventListeners () {
             var me = this;
 
-            me.selection
-                .on(event, callback);
+            for (var j = 0; j < me.events.length; j++) {
+                var event = events[j];
+
+                me.selection
+                    .on(event, me.callbacks[event]);
+            }
         }
     }
 
