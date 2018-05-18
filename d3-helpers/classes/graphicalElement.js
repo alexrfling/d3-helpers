@@ -21,4 +21,16 @@ class GraphicalElement {
 
         return me.group._groups[0][0].getBoundingClientRect();
     }
+
+    bindEventListeners () {
+        var me = this;
+        var events = Object.keys(me.options.callbacks);
+
+        for (var j = 0; j < events.length; j++) {
+            var event = events[j];
+
+            me.selection
+                .on(event, me.options.callbacks[event]);
+        }
+    }
 }

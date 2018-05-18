@@ -152,7 +152,7 @@ class Labels extends GraphicalElement {
             }
         }
 
-        me.group
+        me.selection = me.group
             .selectAll('text')
             .attr('id', function (d) { return me.getLabelId.call(me, d); });
     }
