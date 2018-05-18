@@ -68,6 +68,18 @@
 
             return me.group._groups[0][0].getBoundingClientRect();
         }
+
+        bindEventListeners () {
+            var me = this;
+            var events = Object.keys(me.options.callbacks);
+
+            for (var j = 0; j < events.length; j++) {
+                var event = events[j];
+
+                me.selection
+                    .on(event, me.options.callbacks[event]);
+            }
+        }
     }
 
     class Axis extends GraphicalElement {
@@ -148,14 +160,12 @@
 
     class ElementCollection extends GraphicalElement {
 
-        constructor (svg, className, elementType, attrs, callbacks, options) {
+        constructor (svg, className, elementType, attrs, options) {
             super(svg, className, options);
 
             var me = this;
             me.elementType = elementType;
             me.attrs = attrs;
-            me.callbacks = callbacks;
-            me.events = Object.keys(callbacks);
         }
 
         updateData (data, key) {
@@ -169,7 +179,6 @@
                 .data(data, key)
                 .enter()
                 .append(me.elementType);
-            me.bindEventListeners();
         }
 
         updateDataWithDomIds (data, key) {
@@ -184,7 +193,6 @@
                 .enter()
                 .append(me.elementType)
                 .attr('id', function (d) { return htmlEscape(key(d)); });
-            me.bindEventListeners();
         }
 
         updateVis () {
@@ -195,17 +203,6 @@
 
                 me.selection
                     .attr(attribute, me.attrs[attribute]);
-            }
-        }
-
-        bindEventListeners () {
-            var me = this;
-
-            for (var j = 0; j < me.events.length; j++) {
-                var event = me.events[j];
-
-                me.selection
-                    .on(event, me.callbacks[event]);
             }
         }
     }
@@ -364,7 +361,7 @@
                 }
             }
 
-            me.group
+            me.selection = me.group
                 .selectAll('text')
                 .attr('id', function (d) { return me.getLabelId.call(me, d); });
         }
