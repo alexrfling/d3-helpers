@@ -1,6 +1,6 @@
 class Labels extends GraphicalElement {
 
-    constructor (svg, className, labels, margin, offset, angled, fontSize, maxLabelLength, orientation, options) {
+    constructor (svg, className, margin, offset, angled, fontSize, maxLabelLength, orientation, options) {
         super(svg, className, options);
 
         var me = this;
@@ -37,9 +37,6 @@ class Labels extends GraphicalElement {
                 me.lengthDimension = 'height';
                 break;
         }
-
-        me.updateLabels(labels);
-        me.updateVis(); // for initial angling
     }
 
     tickFormat (d) {
