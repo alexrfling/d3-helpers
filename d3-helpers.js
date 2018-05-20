@@ -256,7 +256,6 @@
         }
 
         getLabelId (d) {
-            var me = this;
             var keyLength = parseInt(d);
 
             // extract original label from string, and escape it
@@ -360,7 +359,7 @@
 
             me.selection = me.group
                 .selectAll('text')
-                .attr('id', function (d) { return me.getLabelId.call(me, d); });
+                .attr('id', me.getLabelId);
         }
 
         sample (array, max) {
