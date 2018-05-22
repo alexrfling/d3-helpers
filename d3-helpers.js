@@ -45,6 +45,27 @@
         return ('_' + str).replace(/\||\.|\*|\/|\(|\)|'|"| /g, '_');
     }
 
+    function setDefaultPropertiesFalsy (object, options, defaults) {
+        var properties = Object.keys(defaults);
+
+        for (var j = 0; j < properties.length; j++) {
+            var property = properties[j];
+
+            object[property] = (options[property] || defaults[property]);
+        }
+    }
+
+    function setDefaultPropertiesUndefined (object, options, defaults) {
+        var properties = Object.keys(defaults);
+
+        for (var j = 0; j < properties.length; j++) {
+            var property = properties[j];
+            var value = options[property];
+
+            object[property] = (value === undefined ? defaults[property] : value);
+        }
+    }
+
     class GraphicalElement {
 
         constructor (svg, className, options) {
@@ -583,6 +604,8 @@
 
     exports.addDropShadowFilter = addDropShadowFilter;
     exports.htmlEscape = htmlEscape;
+    exports.setDefaultPropertiesFalsy = setDefaultPropertiesFalsy;
+    exports.setDefaultPropertiesUndefined = setDefaultPropertiesUndefined;
     exports.Axis = Axis;
     exports.Bucketizer = Bucketizer;
     exports.ElementCollection = ElementCollection;
