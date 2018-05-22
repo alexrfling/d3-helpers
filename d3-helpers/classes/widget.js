@@ -16,6 +16,25 @@ class Widget {
         }
     }
 
+    // clear out DOM elements inside parent and return a container to hold
+    // all HTML and SVG elements
+    newDefaultSVGContainer (options) {
+        var me = this;
+        me.destroy();
+
+        return new SVGContainer(
+            me.id,
+            'd3-helpers-widget-div',
+            'd3-helpers-widget-svg',
+            me.options.SVG_MARGINS,
+            options.width,
+            (options.height || me.options.DEFAULT_HEIGHT),
+            {
+                onWindowResize: (options.width ? null : function () { me.resize.call(me); })
+            }
+        );
+    }
+
     // returns the given object
     identity (d) {
         return d;
