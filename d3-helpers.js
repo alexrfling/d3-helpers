@@ -101,6 +101,17 @@
                     .on(event, me.options.callbacks[event]);
             }
         }
+
+        updateStyle () {
+            var me = this;
+
+            for (var j = 0; j < arguments.length; j++) {
+                var style = arguments[j];
+
+                me.selection
+                    .style(style, me.options.styles[style]);
+            }
+        }
     }
 
     class Axis extends GraphicalElement {
